@@ -1,4 +1,12 @@
-func-font(color, size = $font-size-md, weight = $font-size-n)
+func-font(color, size = $font-size-md, weight = $font-weight-n)
   color color
   font-size size
   font-weight weight
+
+bg-color(bgcolor)
+  background-color bgcolor
+
+fancy-corner(liner-gradient, size-x, size-y)
+  background liner-gradient
+  background-size size-x size-y
+  background-repeat no-repeat

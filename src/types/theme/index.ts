@@ -11,3 +11,8 @@ export interface ThemeType {
 export interface ThemeMap {
   [propName: string]: ThemeType
 }
+
+export enum Themes {
+  'Default',
+  'Cyber',
+}

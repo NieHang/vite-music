@@ -3,7 +3,7 @@
     v-bind="$attrs"
     :class="[
       { 'hide-line-through': noLineThrough },
-      { 'scale-title': needScaleTitle },
+      { 'scale-title': isCellGroupTitle },
     ]"
   >
     <!-- <template v-if="!$attrs.title" #title>
@@ -12,6 +12,7 @@
     <template v-if="!noRightContent" #right-icon>
       <slot name="right" />
       <i
+        v-if="!noRightIcon"
         :class="[
           'van-badge__wrapper van-icon van-cell__right-icon',
           `van-icon-${icon}`,
@@ -41,7 +42,11 @@ export default {
       type: Boolean,
       default: false,
     },
-    needScaleTitle: {
+    noRightIcon: {
+      type: Boolean,
+      default: false,
+    },
+    isCellGroupTitle: {
       type: Boolean,
       default: false,
     },
@@ -56,6 +61,16 @@ export default {
 
 <style lang="stylus" scoped>
 .van-cell
+  func-font(var(--cell-font-color), 14px, $font-weight-lg)
+  bg-color(transparent)
+  &:deep() .van-cell__value
+    func-font(var(--cell-group-title-color))
+  &:deep() .van-badge
+    border none
+    func-font(var(--badge-font-color), 12px, $font-weight-lg)
+    bg-color(var(--badge-bgcolor))
+  &:deep() .van-switch
+    bg-color(var(--switch-bgcolor))
   &:after
     margin-right: -($font-size-lg)
     border-bottom: 1px solid var(--cell-line-through-color)

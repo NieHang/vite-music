@@ -1,4 +1,5 @@
 import { createStore } from 'vuex'
+import { MUTATION } from '@/types'
 
 const store = createStore({
   state() {
@@ -7,7 +8,7 @@ const store = createStore({
     }
   },
   mutations: {
-    ['SHOW_LEFT_MENU'](state: any, showLeftMenu) {
+    [MUTATION.SHOW_LEFT_MENU](state: any, showLeftMenu) {
       state.showLeftMenu = showLeftMenu
     },
   },
