@@ -16,3 +16,5 @@ export enum Themes {
   'Default',
   'Cyber',
 }
+
+export const THEME_KEY: string = 'THEME_KEY'

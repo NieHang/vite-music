@@ -1,7 +1,7 @@
 <template>
   <section :class="['left-menu', { show: showLeftMenu }]" @click="hideLeftMenu">
     <aside ref="leftMenuAsideRef" class="left-menu-aside">
-      <router-link to="#" class="left-menu-aside-info">
+      <div class="left-menu-aside-info">
         <van-image
           round
           lazy-load
@@ -9,8 +9,9 @@
           height="30px"
           src="https://img01.yzcdn.cn/vant/cat.jpeg"
         />
-        <span>肥橘 ></span>
-      </router-link>
+        <span @click="show">肥橘 ></span>
+      </div>
+
       <van-cell-group class="left-menu-aside-group">
         <VanCell
           title="音乐服务"
@@ -34,68 +35,59 @@
         />
         <VanCell title="切换主题" center noRightIcon>
           <template v-slot:right>
-            <van-switch v-model="themeChecked" />
+            <van-switch
+              v-model="themeChecked"
+              @change="changeTheme(Number(themeChecked))"
+            />
           </template>
         </VanCell>
       </van-cell-group>
     </aside>
   </section>
+  <LoginSection :showLoginSection="showLoginSection" />
 </template>
 
 <script lang="ts">
-import { Icon, Image, CellGroup, Badge, Switch } from 'vant'
+import { Icon, Image, CellGroup, Badge, Switch, Popup } from 'vant'
 import VanCell from '@/components/VanCell.vue'
-import { computed, reactive, toRefs } from '@vue/reactivity'
+import LoginSection from '@/components/LoginSection.vue'
+import { toRefs } from '@vue/reactivity'
 import { useStore } from 'vuex'
 import useTheme from '@/hooks/themes/useThemes'
-import { Themes, MUTATION } from '@/types'
-import { watch } from 'vue'
-
-interface LeftMenuStateType {
-  leftMenuAsideRef: null | HTMLElement
-  themeChecked: Boolean
-  showLeftMenu: () => Boolean
-}
+import useLeftMenu from '@/hooks/leftMenu/useLeftMenu'
+import { ref } from 'vue'
 
 export default {
+  name: 'LeftMenu',
   components: {
     [Image.name]: Image,
     [CellGroup.name]: CellGroup,
     [Icon.name]: Icon,
     [Badge.name]: Badge,
     [Switch.name]: Switch,
+    [Popup.name]: Popup,
     VanCell,
+    LoginSection,
   },
   setup() {
     const store = useStore()
 
     const changeTheme = useTheme()
 
-    const leftMenuState: LeftMenuStateType = reactive({
-      leftMenuAsideRef: null,
-      themeChecked: false,
-      showLeftMenu: computed(() => store.state.showLeftMenu),
-    })
+    const { leftMenuState, hideLeftMenu } = useLeftMenu(store)
 
-    setTimeout(() => {
-      store.commit(MUTATION.SHOW_LEFT_MENU, true)
-    }, 0)
+    const showLoginSection = ref(false)
 
-    const hideLeftMenu = (e: any) => {
-      if (!(leftMenuState.leftMenuAsideRef as any).contains(e.target))
-        store.commit(MUTATION.SHOW_LEFT_MENU, false)
-    }
+    const show = () => (showLoginSection.value = true)
 
-    watch(
-      (): Boolean => leftMenuState.themeChecked,
-      (themeChecked: Boolean) => {
-        changeTheme(themeChecked ? Themes.Cyber : Themes.Default)
-      }
-    )
+    store.commit('SHOW_LEFT_MENU', true)
 
     return {
       ...toRefs(leftMenuState),
       hideLeftMenu,
+      changeTheme,
+      show,
+      showLoginSection,
     }
   },
 }
@@ -108,7 +100,7 @@ export default {
   left -100%
   width 100%
   height 100%
-  bg-color(rgba(38, 38, 38, .8))
+  bg-color(rgba(38, 38, 38, .5))
   transition left .5s ease
   &-aside
     position absolute
@@ -120,13 +112,16 @@ export default {
     &-info
       display flex
       align-items center
-      func-font(white, 14px, $font-size-n)
+      mixin-font(white, 14px, $font-weight-sm)
       & > span
         margin-left 10px
     &-group
       margin 10px 0 0
-      fancy-corner(var(--cell-group-linear-gradient), 50%, 100%)
-      // bg-color(var(--cell-bgcolor))
+      missing-corner(var(--linear-gradient-double-missing-corner), var(--linear-gradient-double-missing-corner-background-size))
+      bd-radius(var(--cell-group-border-radius))
+      &:after
+        border none
+
 .show
   left 0
 </style>

@@ -1,11 +1,9 @@
-import { ThemeMap, Varibles, Themes } from '@/types'
+import { ThemeMap, Varibles, Themes, THEME_KEY } from '@/types'
 import variblesDefault from '@/styles/themes/variblesDefault'
 import variblesCyber from '@/styles/themes/variblesCyber'
 import storage from 'good-storage'
 
 export default function useTheme() {
-  const THEME_KEY: string = 'THEME_KEY'
-
   const themeMap: ThemeMap = {
     [Themes.Default]: {
       title: '深色',

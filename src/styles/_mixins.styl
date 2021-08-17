@@ -1,4 +1,4 @@
-func-font(color, size = $font-size-md, weight = $font-weight-n)
+mixin-font(color, size = $font-size-md, weight = $font-weight-n)
   color color
   font-size size
   font-weight weight
@@ -6,7 +6,10 @@ func-font(color, size = $font-size-md, weight = $font-weight-n)
 bg-color(bgcolor)
   background-color bgcolor
 
-fancy-corner(liner-gradient, size-x, size-y)
-  background liner-gradient
-  background-size size-x size-y
+bd-radius(radius = $border-radius-xs)
+  border-radius radius
+
+missing-corner(background = var(--body-bgcolor), size)
+  background background
+  background-size size
   background-repeat no-repeat

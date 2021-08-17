@@ -22,7 +22,7 @@
   </van-cell>
 </template>
 
-<script>
+<script lang="ts">
 import { Cell } from 'vant'
 
 export default {
@@ -61,13 +61,13 @@ export default {
 
 <style lang="stylus" scoped>
 .van-cell
-  func-font(var(--cell-font-color), 14px, $font-weight-lg)
+  mixin-font(var(--cell-font-color), 14px, $font-weight-lg)
   bg-color(transparent)
   &:deep() .van-cell__value
-    func-font(var(--cell-group-title-color))
+    mixin-font(var(--cell-group-title-color))
   &:deep() .van-badge
     border none
-    func-font(var(--badge-font-color), 12px, $font-weight-lg)
+    mixin-font(var(--badge-font-color), 12px, $font-weight-lg)
     bg-color(var(--badge-bgcolor))
   &:deep() .van-switch
     bg-color(var(--switch-bgcolor))
@@ -81,7 +81,7 @@ export default {
   line-height 12px
   &:deep() .van-cell__title
     & > span
-      func-font(var(--cell-group-title-color))
+      mixin-font(var(--cell-group-title-color))
       display inline-block
       transform scale(.7) translateX(-20%)
 </style>
