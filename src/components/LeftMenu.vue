@@ -1,5 +1,10 @@
 <template>
-  <section :class="['left-menu', { show: showLeftMenu }]" @click="hideLeftMenu">
+  <van-popup
+    class="left-menu"
+    v-model:show="showLeftMenu"
+    position="left"
+    :style="{ width: '80%', height: '100%' }"
+  >
     <aside ref="leftMenuAsideRef" class="left-menu-aside">
       <div class="left-menu-aside-info">
         <van-image
@@ -9,7 +14,7 @@
           height="30px"
           src="https://img01.yzcdn.cn/vant/cat.jpeg"
         />
-        <span @click="show">肥橘 ></span>
+        <span @click="openLoginSection">肥橘 ></span>
       </div>
 
       <van-cell-group class="left-menu-aside-group">
@@ -43,19 +48,20 @@
         </VanCell>
       </van-cell-group>
     </aside>
-  </section>
-  <LoginSection :showLoginSection="showLoginSection" />
+  </van-popup>
+  <component
+    :is="LoginSectionAsyncComponent"
+    v-model:show="showLoginSection"
+  ></component>
 </template>
 
 <script lang="ts">
 import { Icon, Image, CellGroup, Badge, Switch, Popup } from 'vant'
 import VanCell from '@/components/VanCell.vue'
-import LoginSection from '@/components/LoginSection.vue'
 import { toRefs } from '@vue/reactivity'
-import { useStore } from 'vuex'
 import useTheme from '@/hooks/themes/useThemes'
 import useLeftMenu from '@/hooks/leftMenu/useLeftMenu'
-import { ref } from 'vue'
+import { defineAsyncComponent } from '@vue/runtime-core'
 
 export default {
   name: 'LeftMenu',
@@ -67,27 +73,21 @@ export default {
     [Switch.name]: Switch,
     [Popup.name]: Popup,
     VanCell,
-    LoginSection,
   },
   setup() {
-    const store = useStore()
-
     const changeTheme = useTheme()
 
-    const { leftMenuState, hideLeftMenu } = useLeftMenu(store)
+    const { leftMenuState, openLoginSection } = useLeftMenu()
 
-    const showLoginSection = ref(false)
-
-    const show = () => (showLoginSection.value = true)
-
-    store.commit('SHOW_LEFT_MENU', true)
+    const LoginSectionAsyncComponent = defineAsyncComponent(
+      () => import('@/components/LoginSection.vue')
+    )
 
     return {
       ...toRefs(leftMenuState),
-      hideLeftMenu,
       changeTheme,
-      show,
-      showLoginSection,
+      openLoginSection,
+      LoginSectionAsyncComponent,
     }
   },
 }
@@ -105,7 +105,7 @@ export default {
   &-aside
     position absolute
     top 0
-    width calc(80% - 20px)
+    width calc(100% - 20px)
     height calc(100% - 10px)
     padding 10px 10px 0
     bg-color(var(--body-bgcolor))

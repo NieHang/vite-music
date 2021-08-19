@@ -1,24 +1,20 @@
-import { LeftMenuStateType, THEME_KEY, Themes, MUTATION } from '@/types'
+import { LeftMenuStateType, THEME_KEY, Themes } from '@/types'
 import storage from 'good-storage'
-import { computed, reactive } from 'vue'
-import { Store } from 'vuex'
+import { reactive } from 'vue'
 
-export default function useLeftMenus(store: Store<any>) {
+export default function useLeftMenus() {
   const leftMenuState: LeftMenuStateType = reactive({
     leftMenuAsideRef: null,
-    // showLoginSection: false,
+    showLoginSection: false,
     themeChecked: Boolean(storage.get(THEME_KEY)),
-    showLeftMenu: computed(() => store.state.showLeftMenu),
+    showLeftMenu: true,
     Themes,
   })
 
-  const hideLeftMenu = (e: MouseEvent) => {
-    if (!(leftMenuState.leftMenuAsideRef as any).contains(e.target))
-      store.commit(MUTATION.SHOW_LEFT_MENU, false)
-  }
+  const openLoginSection = () => (leftMenuState.showLoginSection = true)
 
   return {
     leftMenuState,
-    hideLeftMenu,
+    openLoginSection,
   }
 }

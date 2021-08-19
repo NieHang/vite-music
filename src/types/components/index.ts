@@ -1,6 +1,6 @@
 export interface LeftMenuStateType {
   leftMenuAsideRef: null | HTMLElement
-  // showLoginSection: Boolean
+  showLoginSection: Boolean
   themeChecked: Boolean
-  showLeftMenu: () => Boolean
+  showLeftMenu: Boolean
 }
