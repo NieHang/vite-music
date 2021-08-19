@@ -4,6 +4,7 @@ const varibles: Varibles = {
   ['--body-bgcolor']: '#040305',
 
   ['--logo-bgcolor']: '#fbe700',
+  ['--logo-lighter-bgcolor']: '#fced0a',
 
   ['--cell-bgcolor']: '#fbe700',
   ['--cell-font-color']: '#030302',

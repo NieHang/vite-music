@@ -3,7 +3,8 @@ import { Varibles } from '@/types/index'
 const varibles: Varibles = {
   ['--body-bgcolor']: '#151515',
 
-  ['--logo-bgcolor']: '#ea4d44',
+  ['--logo-bgcolor']: '#da2c1f',
+  ['--logo-lighter-bgcolor']: '#f12a24',
 
   ['--cell-bgcolor']: '#202020',
   ['--cell-font-color']: '#fefefe',
@@ -16,7 +17,7 @@ const varibles: Varibles = {
 
   ['--linear-gradient-transparent-double-missing-corner']: 'transparent',
 
-  ['--badge-bgcolor']: '#ea4d44',
+  ['--badge-bgcolor']: '#da2c1f',
   ['--badge-font-color']: '#fefefe',
 
   ['--switch-bgcolor']: '#373737',
