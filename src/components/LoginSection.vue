@@ -12,6 +12,13 @@
         <svg-icon name="wangyiyun" />
         <div class="circle"></div>
       </div>
+      <div class="wrapper-login">
+        <div class="wrapper-login-number">
+          <span>17863080270</span>
+          <svg-icon name="number-pen" />
+        </div>
+        <div class="wrapper-login-btn">注册/登录</div>
+      </div>
     </div>
   </van-popup>
 </template>
@@ -63,6 +70,30 @@ export default {
         bd-radius(50%)
         border: 1px solid #f12a24
         animation after 5s linear infinite
+  .wrapper-login
+    padding 0 20px
+    text-align center
+    &-number
+      height 35px
+      line-height 35px
+      & > span,.svg-icon
+        display inline-block
+        vertical-align middle
+      & > span
+        mixin-font(var(--cell-font-color), $font-size-lg)
+      & > .svg-icon
+        margin-left 10px
+    &-btn
+      display inline-block
+      mixin-font(#fe5454, $font-size-lg, $font-weight-sm)
+      bg-color(var(--btn-bgcolor))
+      width 80%
+      padding 15px 0
+      border-radius 25px
+      font-family 'Alibaba PuHuiTi'
+      font-style normal
+      &:active
+        opacity .5
 
 
 @keyframes circle
@@ -70,8 +101,8 @@ export default {
     width 100px
     height 100px
   to
-    width 400px
-    height 400px
+    width 350px
+    height 350px
     opacity 0
 
 @keyframes after

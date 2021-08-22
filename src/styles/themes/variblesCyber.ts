@@ -3,6 +3,8 @@ import { Varibles } from '@/types'
 const varibles: Varibles = {
   ['--body-bgcolor']: '#040305',
 
+  ['--btn-bgcolor']: '#040305',
+
   ['--logo-bgcolor']: '#fbe700',
   ['--logo-lighter-bgcolor']: '#fced0a',
 
