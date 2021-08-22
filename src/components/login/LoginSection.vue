@@ -17,15 +17,22 @@
           <span>17863080270</span>
           <svg-icon name="number-pen" />
         </div>
-        <div class="wrapper-login-btn">注册/登录</div>
+        <div class="wrapper-login-btn" @click="showInputNumberSection = true">
+          注册/登录
+        </div>
       </div>
     </div>
+    <component
+      :is="LoginInputNumberSectionComponent"
+      v-model:show="showInputNumberSection"
+    ></component>
   </van-popup>
 </template>
 
 <script lang="ts">
 import { Popup } from 'vant'
-import { PropType } from 'vue'
+import { Ref, ref } from 'vue'
+import { defineAsyncComponent } from '@vue/runtime-core'
 
 export default {
   name: 'LoginSection',
@@ -34,13 +41,20 @@ export default {
   },
   props: {
     showLoginSection: {
-      type: Boolean as PropType<Boolean>,
+      type: Boolean,
       default: false,
     },
   },
   setup(props) {
+    const showInputNumberSection: Ref<Boolean> = ref(false)
+
+    const LoginInputNumberSectionComponent = defineAsyncComponent(
+      () => import('@/components/login/LoginInputNumberSection.vue')
+    )
     return {
       props,
+      showInputNumberSection,
+      LoginInputNumberSectionComponent,
     }
   },
 }
@@ -94,7 +108,6 @@ export default {
       font-style normal
       &:active
         opacity .5
-
 
 @keyframes circle
   from

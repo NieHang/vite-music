@@ -80,7 +80,7 @@ export default {
     const { leftMenuState, openLoginSection } = useLeftMenu()
 
     const LoginSectionAsyncComponent = defineAsyncComponent(
-      () => import('@/components/LoginSection.vue')
+      () => import('@/components/login/LoginSection.vue')
     )
 
     return {
