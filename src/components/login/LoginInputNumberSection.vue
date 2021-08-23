@@ -76,10 +76,11 @@ export default {
     const phoneNumber: Ref<Number | null> = ref(null)
     const showIndexNumberPerfix: Ref<Boolean> = ref(false)
     let countryNumberPerfix: Ref<Object> = ref({})
-    let indexList: Ref<Array<String>> = ref([])
+    let indexList: Array<String> = []
     axios.get('../../static/phone-number/number.json').then((response) => {
       countryNumberPerfix.value = response.data
-      for (const item in response.data) indexList.value.push(item)
+      for (const item in response.data) indexList.push(item)
+      Object.freeze(indexList)
     })
     return {
       phoneNumber,
