@@ -22,10 +22,12 @@
         </div>
       </div>
     </div>
-    <component
-      :is="LoginInputNumberSectionComponent"
-      v-model:show="showInputNumberSection"
-    ></component>
+    <suspense>
+      <component
+        :is="LoginInputNumberSectionComponent"
+        v-model:show="showInputNumberSection"
+      ></component>
+    </suspense>
   </van-popup>
 </template>
 

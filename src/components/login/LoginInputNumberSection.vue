@@ -16,7 +16,7 @@
           <div>未注册手机号登录后将自动创建账号</div>
         </div>
         <div class="phone-number">
-          <div @click="showIndexNumberPerfix = true">+86</div>
+          <div @click="showIndexNumberPerfix = true">+{{ numberPerfix }}</div>
           <input type="number" v-model="phoneNumber" placeholder="输入手机号" />
           <van-icon name="clear" />
         </div>
@@ -42,6 +42,7 @@
               :key="number"
               :title="number[0]"
               :value="`+${number[1]}`"
+              @click="getCurrentNumberPerfix(number[1])"
             />
           </template>
         </van-index-bar>
@@ -51,15 +52,14 @@
 </template>
 
 <script lang="ts">
-import { Popup, Field, Icon, IndexBar, IndexAnchor, Cell } from 'vant'
+import { Popup, Icon, IndexBar, IndexAnchor, Cell } from 'vant'
 import AppBar from '@/components/shared/AppBar.vue'
-import { ref, Ref } from 'vue'
-import axios from 'axios'
+import { toRefs } from 'vue'
+import useLoginInputNumber from '@/hooks/login/useLoginInputNumber'
 
 export default {
   components: {
     [Popup.name]: Popup,
-    [Field.name]: Field,
     [Icon.name]: Icon,
     [IndexBar.name]: IndexBar,
     [IndexAnchor.name]: IndexAnchor,
@@ -72,22 +72,26 @@ export default {
       default: false,
     },
   },
-  setup(props, { emit }) {
-    const phoneNumber: Ref<Number | null> = ref(null)
-    const showIndexNumberPerfix: Ref<Boolean> = ref(false)
-    let countryNumberPerfix: Ref<Object> = ref({})
+  async setup(props, { emit }) {
+    const {
+      state,
+      getCountryNumberPerfixAndIndexListData,
+      getCurrentNumberPerfix,
+    } = useLoginInputNumber()
     let indexList: Array<String> = []
-    axios.get('../../static/phone-number/number.json').then((response) => {
-      countryNumberPerfix.value = response.data
-      for (const item in response.data) indexList.push(item)
-      Object.freeze(indexList)
+    let countryNumberPerfix: {
+      [propName: string]: Array<Array<String>>
+    } = {}
+    await getCountryNumberPerfixAndIndexListData().then((res) => {
+      indexList = res.indexList
+      countryNumberPerfix = res.countryNumberPerfix
     })
     return {
-      phoneNumber,
       emit,
-      showIndexNumberPerfix,
-      countryNumberPerfix,
+      ...toRefs(state),
       indexList,
+      countryNumberPerfix,
+      getCurrentNumberPerfix,
     }
   },
 }

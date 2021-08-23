@@ -57,7 +57,7 @@
 
 <script lang="ts">
 import { Icon, Image, CellGroup, Badge, Switch, Popup } from 'vant'
-import VanCell from '@/components/VanCell.vue'
+import VanCell from '@/components/shared/VanCell.vue'
 import { toRefs } from '@vue/reactivity'
 import useTheme from '@/hooks/themes/useThemes'
 import useLeftMenu from '@/hooks/leftMenu/useLeftMenu'
