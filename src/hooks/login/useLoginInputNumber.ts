@@ -20,11 +20,12 @@ export default function useLoginInputNumber() {
     let parentNode: HTMLElement = event.target.parentNode
     while (
       parentNode != undefined &&
-      !parentNode?.className?.includes('perfix-index-cell')
+      !parentNode.className.includes('perfix-index-cell')
     ) {
+      if (parentNode.className.includes('van-index-bar')) return
       parentNode = parentNode.parentNode as HTMLElement
     }
-    state.numberPerfix = parentNode!.dataset.perfix!
+    state.numberPerfix = parentNode?.dataset.perfix!
     state.showIndexNumberPerfix = false
   }
 
