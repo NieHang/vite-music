@@ -1,30 +1,30 @@
 import { reactive } from 'vue'
+import { LoginInputNumberStateType } from '@/types/components'
 import axios from 'axios'
 
 export default function useLoginInputNumber() {
-  const state = reactive({
+  const state: LoginInputNumberStateType = reactive({
     phoneNumber: null,
     showIndexNumberPerfix: false,
     numberPerfix: '86',
+    countryNumberPerfix: {},
+    indexList: [],
   })
   const getCountryNumberPerfixAndIndexListData = async () => {
-    const indexList: Array<String> = []
-    let countryNumberPerfix: {
-      [propName: string]: Array<Array<String>>
-    } = {}
-    await axios
-      .get('../../static/phone-number/number.json')
-      .then((response) => {
-        countryNumberPerfix = response.data
-        for (const item in response.data) indexList.push(item)
-      })
-    return {
-      indexList,
-      countryNumberPerfix,
-    }
+    axios.get('../../static/phone-number/number.json').then((response) => {
+      state.countryNumberPerfix = response.data
+      for (const item in response.data) state.indexList.push(item)
+    })
   }
-  const getCurrentNumberPerfix = (numberPerfix: string) => {
-    state.numberPerfix = numberPerfix
+  const getCurrentNumberPerfix = (event: any) => {
+    let parentNode: HTMLElement = event.target.parentNode
+    while (
+      parentNode != undefined &&
+      !parentNode?.className?.includes('perfix-index-cell')
+    ) {
+      parentNode = parentNode.parentNode as HTMLElement
+    }
+    state.numberPerfix = parentNode!.dataset.perfix!
     state.showIndexNumberPerfix = false
   }
 

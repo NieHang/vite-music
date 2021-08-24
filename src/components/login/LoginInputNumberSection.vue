@@ -34,7 +34,7 @@
           leftIconType="cross"
           @leftIconClick="showIndexNumberPerfix = false"
         />
-        <van-index-bar :index-list="indexList">
+        <van-index-bar :index-list="indexList" @click="getCurrentNumberPerfix">
           <template v-for="(item, index) in countryNumberPerfix" :key="index">
             <van-index-anchor :index="index" />
             <van-cell
@@ -42,7 +42,8 @@
               :key="number"
               :title="number[0]"
               :value="`+${number[1]}`"
-              @click="getCurrentNumberPerfix(number[1])"
+              :data-perfix="number[1]"
+              class="perfix-index-cell"
             />
           </template>
         </van-index-bar>
@@ -72,25 +73,16 @@ export default {
       default: false,
     },
   },
-  async setup(props, { emit }) {
+  setup(props, { emit }) {
     const {
       state,
       getCountryNumberPerfixAndIndexListData,
       getCurrentNumberPerfix,
     } = useLoginInputNumber()
-    let indexList: Array<String> = []
-    let countryNumberPerfix: {
-      [propName: string]: Array<Array<String>>
-    } = {}
-    await getCountryNumberPerfixAndIndexListData().then((res) => {
-      indexList = res.indexList
-      countryNumberPerfix = res.countryNumberPerfix
-    })
+    getCountryNumberPerfixAndIndexListData()
     return {
       emit,
       ...toRefs(state),
-      indexList,
-      countryNumberPerfix,
       getCurrentNumberPerfix,
     }
   },
