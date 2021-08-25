@@ -18,8 +18,9 @@
         <div class="phone-number">
           <div @click="showIndexNumberPerfix = true">+{{ numberPerfix }}</div>
           <input type="number" v-model="phoneNumber" placeholder="输入手机号" />
-          <van-icon name="clear" />
+          <van-icon name="clear" @click="phoneNumber = ''" />
         </div>
+        <div :class="['next-btn', { dismiss: !phoneNumber }]">下一步</div>
       </div>
     </div>
     <van-popup
@@ -128,6 +129,16 @@ export default {
         float right
         color var(--cell-group-title-color)
         transform translateY(20%)
+    & > .next-btn
+      height 50px
+      line-height 50px
+      text-align center
+      mixin-font(var(--common-font-color))
+      background-image linear-gradient(to right, #5a2723 , #5b1310)
+      bd-radius(25px)
+      margin-top 30px
+    & > .dismiss
+      color var(--dismiss-font-color)
 .login-section-number-index
   padding 0 16px
   bg-color(var(--body-bgcolor))

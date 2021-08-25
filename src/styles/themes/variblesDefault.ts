@@ -5,6 +5,8 @@ const varibles: Varibles = {
 
   ['--common-font-color']: '#fefefe',
 
+  ['--dismiss-font-color']: '#865957',
+
   ['--btn-bgcolor']: '#fff',
 
   ['--logo-bgcolor']: '#da2c1f',

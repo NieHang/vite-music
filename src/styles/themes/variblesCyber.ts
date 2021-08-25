@@ -7,6 +7,8 @@ const varibles: Varibles = {
 
   ['--btn-bgcolor']: '#040305',
 
+  ['--dismiss-font-color']: '#865957',
+
   ['--logo-bgcolor']: '#fbe700',
   ['--logo-lighter-bgcolor']: '#fced0a',
 
