@@ -1,6 +1,6 @@
 import { reactive } from 'vue'
 import { LoginInputNumberStateType } from '@/types/components'
-import axios from 'axios'
+import { apis } from '@/http/backend'
 
 export default function useLoginInputNumber() {
   const state: LoginInputNumberStateType = reactive({
@@ -11,7 +11,7 @@ export default function useLoginInputNumber() {
     indexList: [],
   })
   const getCountryNumberPerfixAndIndexListData = async () => {
-    axios.get('../../static/phone-number/number.json').then((response) => {
+    apis.loginApis.getCountryNumberPerfix().then((response) => {
       state.countryNumberPerfix = response.data
       for (const item in response.data) state.indexList.push(item)
     })
