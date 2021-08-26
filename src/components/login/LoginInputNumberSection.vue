@@ -103,8 +103,6 @@ export default {
         margin-top 5px
         mixin-font(var(--cell-group-title-color), $font-size-xs)
     & > .phone-number
-      // display flex
-      // align-items center
       mixin-font(var(--common-font-color))
       margin-top 20px
       border-bottom 1px solid #262626
@@ -125,6 +123,7 @@ export default {
         bg-color(transparent)
         border none
         margin-left 15px
+        caret-color #436bf2
       & > i
         float right
         color var(--cell-group-title-color)

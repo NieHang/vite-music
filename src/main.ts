@@ -16,5 +16,8 @@ createApp(App)
   })
   .use(router)
   .use(store)
+  .directive('focus', (el: HTMLElement) => {
+    el.focus()
+  })
   .component('svg-icon', svgIcon)
   .mount('#app')
