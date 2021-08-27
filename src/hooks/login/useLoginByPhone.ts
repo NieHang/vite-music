@@ -5,16 +5,19 @@ import {
 } from '@/types/components'
 import { apis } from '@/http/backend'
 import storage from 'good-storage'
+import { Toast } from 'vant'
 
 export default function useLoginInputNumber() {
   const state: LoginInputNumberStateType = reactive({
     phoneNumber: null,
-    showIndexNumberPerfix: false,
-    numberPerfix: '86',
+    showIndexCountryCodeList: false,
+    ctcode: '86',
     countryNumberPerfix: {},
     indexList: [],
+    showInputCtCodeSection: false,
   })
-  const getCountryNumberPerfixAndIndexListData = async () => {
+
+  const getCountryCodeAndIndexListData = async () => {
     const data = storage.get(PHONE_NUMBER_PERFIX)
     if (!data) {
       await apis.loginApis.getCountryNumberPerfix().then((response) => {
@@ -26,7 +29,8 @@ export default function useLoginInputNumber() {
     for (const item in storage.get(PHONE_NUMBER_PERFIX))
       state.indexList.push(item)
   }
-  const getCurrentNumberPerfix = (event: any) => {
+
+  const getCurrentCountryCode = (event: any) => {
     let parentNode: HTMLElement = event.target.parentNode
     while (
       parentNode != undefined &&
@@ -35,13 +39,26 @@ export default function useLoginInputNumber() {
       if (parentNode.className.includes('van-index-bar')) return
       parentNode = parentNode.parentNode as HTMLElement
     }
-    state.numberPerfix = parentNode?.dataset.perfix!
-    state.showIndexNumberPerfix = false
+    state.ctcode = parentNode?.dataset.perfix!
+    state.showIndexCountryCodeList = false
+  }
+
+  const nextStep = () => {
+    // if (state.ctcode === '86' && String(state.phoneNumber).length !== 11) {
+    //   Toast.fail('请输入 11位 手机号')
+    // } else {
+    //   apis.loginApis.loginByCtCode({
+    //     phone: String(state.phoneNumber),
+    //     ctcode: state.ctcode,
+    //   })
+    // }
+    state.showInputCtCodeSection = true
   }
 
   return {
     state,
-    getCountryNumberPerfixAndIndexListData,
-    getCurrentNumberPerfix,
+    getCountryCodeAndIndexListData,
+    getCurrentCountryCode,
+    nextStep,
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <van-popup
-    v-model:show="showInputNumberSection"
+    v-model:show="showLoginByPhoneSection"
     position="right"
     :style="{ width: '100%', height: '100%' }"
   >
@@ -16,15 +16,29 @@
           <div>未注册手机号登录后将自动创建账号</div>
         </div>
         <div class="phone-number">
-          <div @click="showIndexNumberPerfix = true">+{{ numberPerfix }}</div>
-          <input type="number" v-model="phoneNumber" placeholder="输入手机号" />
-          <van-icon name="clear" @click="phoneNumber = ''" />
+          <div @click="showIndexCountryCodeList = true">+{{ ctcode }}</div>
+          <input
+            type="number"
+            v-model="phoneNumber"
+            v-focus
+            placeholder="输入手机号"
+          />
+          <van-icon
+            v-show="phoneNumber"
+            name="clear"
+            @click="phoneNumber = ''"
+          />
         </div>
-        <div :class="['next-btn', { dismiss: !phoneNumber }]">下一步</div>
+        <div
+          :class="['next-btn', { dismiss: !phoneNumber }]"
+          @click="phoneNumber && nextStep()"
+        >
+          下一步
+        </div>
       </div>
     </div>
     <van-popup
-      v-model:show="showIndexNumberPerfix"
+      v-model:show="showIndexCountryCodeList"
       round
       position="bottom"
       :style="{ width: '100%', height: '100%' }"
@@ -33,9 +47,9 @@
         <AppBar
           title="选择国家和地区"
           leftIconType="cross"
-          @leftIconClick="showIndexNumberPerfix = false"
+          @leftIconClick="showIndexCountryCodeList = false"
         />
-        <van-index-bar :index-list="indexList" @click="getCurrentNumberPerfix">
+        <van-index-bar :index-list="indexList" @click="getCurrentCountryCode">
           <template v-for="(item, index) in countryNumberPerfix" :key="index">
             <van-index-anchor :index="index" />
             <van-cell
@@ -50,26 +64,29 @@
         </van-index-bar>
       </div>
     </van-popup>
+    <LoginInputCtCode v-model:show="showInputCtCodeSection" />
   </van-popup>
 </template>
 
 <script lang="ts">
-import { Popup, Icon, IndexBar, IndexAnchor, Cell } from 'vant'
+import { Icon, IndexBar, IndexAnchor, Cell } from 'vant'
 import AppBar from '@/components/shared/AppBar.vue'
+import LoginInputCtCode from './LoginInputCtCode.vue'
 import { toRefs } from 'vue'
-import useLoginInputNumber from '@/hooks/login/useLoginInputNumber'
+import useLoginByPhone from '@/hooks/login/useLoginByPhone'
 
 export default {
+  name: 'LoginByPhone',
   components: {
-    [Popup.name]: Popup,
     [Icon.name]: Icon,
     [IndexBar.name]: IndexBar,
     [IndexAnchor.name]: IndexAnchor,
     [Cell.name]: Cell,
     AppBar,
+    LoginInputCtCode,
   },
   props: {
-    showInputNumberSection: {
+    showLoginByPhoneSection: {
       type: Boolean,
       default: false,
     },
@@ -77,14 +94,16 @@ export default {
   setup(props, { emit }) {
     const {
       state,
-      getCountryNumberPerfixAndIndexListData,
-      getCurrentNumberPerfix,
-    } = useLoginInputNumber()
-    getCountryNumberPerfixAndIndexListData()
+      getCountryCodeAndIndexListData,
+      getCurrentCountryCode,
+      nextStep,
+    } = useLoginByPhone()
+    getCountryCodeAndIndexListData()
     return {
       emit,
       ...toRefs(state),
-      getCurrentNumberPerfix,
+      getCurrentCountryCode,
+      nextStep,
     }
   },
 }
