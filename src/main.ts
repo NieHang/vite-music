@@ -8,6 +8,7 @@ import { Lazyload } from '@vant/lazyload'
 import 'normalize.css/normalize.css'
 import '@/styles/index.styl'
 
+import { Popup } from 'vant'
 import svgIcon from '@/components/shared/SvgIcon.vue'
 
 createApp(App)
@@ -19,5 +20,6 @@ createApp(App)
   .directive('focus', (el: HTMLElement) => {
     el.focus()
   })
+  .component('van-popup', Popup)
   .component('svg-icon', svgIcon)
   .mount('#app')

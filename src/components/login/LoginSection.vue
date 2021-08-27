@@ -30,15 +30,11 @@
 </template>
 
 <script lang="ts">
-import { Popup } from 'vant'
 import { Ref, ref } from 'vue'
 import { defineAsyncComponent } from '@vue/runtime-core'
 
 export default {
   name: 'LoginSection',
-  components: {
-    [Popup.name]: Popup,
-  },
   props: {
     showLoginSection: {
       type: Boolean,
