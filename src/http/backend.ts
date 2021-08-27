@@ -14,7 +14,7 @@ const axiosApi = {
       })
   },
 
-  post(url: string): () => AxiosPromise<AxiosResponse> {
+  post(url: string): (params?: any) => AxiosPromise<AxiosResponse> {
     return (params = {}) =>
       service({
         method: 'POST',
@@ -23,7 +23,6 @@ const axiosApi = {
       })
   },
 
-  // TODO 确定 apiConfig 的类型
   creatApi(apiConfig: HandledApiType) {
     let methods: HandledApiType = apiConfig
     Object.keys(apiConfig).forEach((key) => {

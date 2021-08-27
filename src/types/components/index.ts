@@ -7,9 +7,10 @@ export interface LeftMenuStateType {
   showLeftMenu: Boolean
 }
 export interface LoginInputNumberStateType {
-  phoneNumber: null
-  showIndexNumberPerfix: Boolean
-  numberPerfix: String
+  phoneNumber: null | number
+  showIndexCountryCodeList: Boolean
+  showInputCtCodeSection: Boolean
+  ctcode: string
   countryNumberPerfix: {
     [propName: string]: Array<Array<String>>
   }
