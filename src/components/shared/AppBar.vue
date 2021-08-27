@@ -3,15 +3,18 @@
     <div class="app-bar-wrapper">
       <div v-if="showLeftIcon" class="app-bar-wrapper-left">
         <slot name="left"
-          ><van-icon :name="leftIconType" @click="emit('leftIconClick')"
+          ><van-icon
+            :name="leftIconType"
+            size="25"
+            @click="emit('leftIconClick')"
         /></slot>
       </div>
       <div class="app-bar-wrapper-center">
         <slot name="center">{{ title }}</slot>
       </div>
-      <div v-if="showRightIcon" class="app-bar-wrapper-right">
+      <div :class="['app-bar-wrapper-right', { hidden: !showRightIcon }]">
         <slot name="right"
-          ><van-icon name="cross" @click="emit('rightIconClick')"
+          ><van-icon name="cross" size="25" @click="emit('rightIconClick')"
         /></slot>
       </div>
     </div>
@@ -46,15 +49,14 @@ export default {
 
 <style lang="stylus" scoped>
 .app-bar
-  position relative
+  display flex
+  align-items center
   height 50px
   &-wrapper
-    position absolute
-    top 50%
-    left 50%
-    transform translate(-50%, -50%)
+    display flex
+    align-items center
+    justify-content space-between
     width 100%
-    text-align center
     &-left
       float left
       & i
@@ -66,4 +68,6 @@ export default {
     &-right
       float right
       color var(--common-font-color)
+    & > .hidden
+      visibility hidden
 </style>

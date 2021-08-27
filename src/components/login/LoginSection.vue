@@ -15,16 +15,16 @@
       <div class="wrapper-login">
         <div class="wrapper-login-number">
           <span>17863080270</span>
-          <svg-icon name="number-pen" />
+          <svg-icon name="number-pen" :style="{ fill: '#e6ada7' }" />
         </div>
-        <div class="wrapper-login-btn" @click="showInputNumberSection = true">
+        <div class="wrapper-login-btn" @click="showLoginByPhoneSection = true">
           注册/登录
         </div>
       </div>
     </div>
     <component
-      :is="LoginInputNumberSectionComponent"
-      v-model:show="showInputNumberSection"
+      :is="LoginByPhoneComponent"
+      v-model:show="showLoginByPhoneSection"
     ></component>
   </van-popup>
 </template>
@@ -42,15 +42,15 @@ export default {
     },
   },
   setup(props) {
-    const showInputNumberSection: Ref<Boolean> = ref(false)
+    const showLoginByPhoneSection: Ref<Boolean> = ref(false)
 
-    const LoginInputNumberSectionComponent = defineAsyncComponent(
-      () => import('@/components/login/LoginInputNumberSection.vue')
+    const LoginByPhoneComponent = defineAsyncComponent(
+      () => import('@/components/login/LoginByPhone.vue')
     )
     return {
       props,
-      showInputNumberSection,
-      LoginInputNumberSectionComponent,
+      showLoginByPhoneSection,
+      LoginByPhoneComponent,
     }
   },
 }
