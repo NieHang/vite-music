@@ -15,7 +15,7 @@
       <div class="wrapper-login">
         <div class="wrapper-login-number">
           <span>17863080270</span>
-          <svg-icon name="number-pen" :style="{ fill: '#e6ada7' }" />
+          <svg-icon name="number-pen" @click="showLoginByPhoneSection = true" />
         </div>
         <div class="wrapper-login-btn" @click="showLoginByPhoneSection = true">
           注册/登录

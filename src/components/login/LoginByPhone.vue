@@ -64,14 +64,18 @@
         </van-index-bar>
       </div>
     </van-popup>
-    <LoginInputCtCode v-model:show="showInputCtCodeSection" />
+    <LoginInputCtCode
+      v-model:show="showInputCtCodeSection"
+      :ctcode="ctcode"
+      :phone="String(phoneNumber)"
+    />
   </van-popup>
 </template>
 
 <script lang="ts">
 import { Icon, IndexBar, IndexAnchor, Cell } from 'vant'
 import AppBar from '@/components/shared/AppBar.vue'
-import LoginInputCtCode from './LoginInputCtCode.vue'
+import LoginInputCtCode from '@/components/login/LoginInputCaptcha.vue'
 import { toRefs } from 'vue'
 import useLoginByPhone from '@/hooks/login/useLoginByPhone'
 

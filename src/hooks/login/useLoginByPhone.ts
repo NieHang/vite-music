@@ -44,15 +44,19 @@ export default function useLoginInputNumber() {
   }
 
   const nextStep = () => {
-    // if (state.ctcode === '86' && String(state.phoneNumber).length !== 11) {
-    //   Toast.fail('请输入 11位 手机号')
-    // } else {
-    //   apis.loginApis.loginByCtCode({
-    //     phone: String(state.phoneNumber),
-    //     ctcode: state.ctcode,
-    //   })
-    // }
+    if (state.ctcode === '86' && String(state.phoneNumber).length !== 11) {
+      Toast.fail('请输入 11位 手机号')
+      return
+    }
     state.showInputCtCodeSection = true
+    apis.loginApis
+      .loginByCaptcha({
+        phone: String(state.phoneNumber),
+        ctcode: state.ctcode,
+      })
+      .then((resolve) => {
+        if (resolve.data.message) Toast.fail(resolve.data.message)
+      })
   }
 
   return {
