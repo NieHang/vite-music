@@ -17,7 +17,12 @@ export interface HandledLoginApiType {
     ctcode?: string
   }) => AxiosPromise<any>
   verifyCaptcha: (param: {
+    phone: string
     captcha: string
+    ctcode?: string
+  }) => AxiosPromise<any>
+  checkPhoneRegister: (params: {
+    phone: string
     ctcode?: string
   }) => AxiosPromise<any>
 }

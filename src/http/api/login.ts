@@ -20,6 +20,10 @@ const loginApis: {
     method: 'post',
     url: `${base.api}captcha/verify`,
   },
+  checkPhoneRegister: {
+    method: 'post',
+    url: `${base.api}cellphone/existence/check`,
+  },
 }
 
 export default loginApis

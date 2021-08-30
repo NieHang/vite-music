@@ -3,8 +3,8 @@
     v-model:show="showInputCtCodeSection"
     position="right"
     :style="{ width: '100%', height: '100%' }"
-    @open="startCountTime"
-    @close="clearCountTime"
+    @open="openPopup"
+    @close="closePopup"
   >
     <div class="login-section-captcha">
       <AppBar
@@ -37,8 +37,8 @@
             :value="captcha"
             :mask="false"
             :gutter="10"
-            :focused="showKeyboard"
             :length="4"
+            :focused="showKeyboard"
             @focus="showKeyboard = true"
             class="captcha-input"
           />
@@ -49,6 +49,7 @@
             :maxlength="4"
             @blur="showKeyboard = false"
             class="captcha-keyboard"
+            @input="verifyCaptcha(phone, ctcode)"
           />
         </div>
       </div>
@@ -81,15 +82,17 @@ export default {
     AppBar,
   },
   setup(props, { emit }) {
-    const { state, startCountTime, getCaptchaAgain, clearCountTime } =
+    const { state, openPopup, getCaptchaAgain, closePopup, verifyCaptcha } =
       useLoginInputCaptcha()
 
     return {
+      props,
       emit,
       ...toRefs(state),
-      startCountTime,
+      openPopup,
       getCaptchaAgain,
-      clearCountTime,
+      closePopup,
+      verifyCaptcha,
     }
   },
 }

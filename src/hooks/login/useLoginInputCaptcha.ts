@@ -4,8 +4,8 @@ import { nextTick, reactive, watch } from 'vue'
 export default function useLoginInputCaptcha() {
   const state = reactive({
     captcha: '',
-    showKeyboard: false,
-    restOfTimeForGetCaptcha: 5,
+    showKeyboard: true,
+    restOfTimeForGetCaptcha: 10,
     interval: null,
   })
 
@@ -24,7 +24,11 @@ export default function useLoginInputCaptcha() {
       'van-password-input__item'
     )
     nodes[val.length - 1 < 0 ? 0 : val.length - 1].classList.add('input-active')
-    if (val === '') nodes[0].classList.remove('input-active')
+    if (val === '') {
+      for (let i = 0; i < nodes.length; i++) {
+        nodes[i].classList.remove('input-active')
+      }
+    }
   }
 
   const watchTime = (val: number) => val === 0 && clearInterval(state.interval!)
@@ -40,14 +44,37 @@ export default function useLoginInputCaptcha() {
     if (state.interval) clearInterval(state.interval!)
   }
 
-  const getCaptchaAgain = async (phone: string, ctcode: string) => {
-    const captcha = await apis.loginApis.loginByCaptcha({
+  const getCaptchaAgain = async (phone: string, ctcode?: string) => {
+    const res = await apis.loginApis.loginByCaptcha({
       phone,
       ctcode,
     })
     startCountTime()
-    if (captcha.data.message) Toast.fail(captcha.data.message)
+    if (res.data.message) Toast.fail(res.data.message)
   }
 
-  return { state, startCountTime, getCaptchaAgain, clearCountTime }
+  const verifyCaptcha = async (phone: string, ctcode?: string) => {
+    await nextTick()
+    if (state.captcha.length !== 4) return
+    const res = await apis.loginApis.verifyCaptcha({
+      phone,
+      captcha: state.captcha,
+      ctcode,
+    })
+    if (res.data.data) {
+      apis.loginApis.checkPhoneRegister({ phone })
+    } else if (res.data.message) Toast.fail(res.data.message)
+  }
+
+  const openPopup = () => {
+    state.showKeyboard = true
+    startCountTime()
+  }
+
+  const closePopup = () => {
+    state.captcha = ''
+    clearCountTime()
+  }
+
+  return { state, openPopup, getCaptchaAgain, closePopup, verifyCaptcha }
 }
