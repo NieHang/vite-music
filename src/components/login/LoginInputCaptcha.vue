@@ -48,6 +48,7 @@
             :show="showKeyboard"
             :maxlength="4"
             @blur="showKeyboard = false"
+            class="captcha-keyboard"
           />
         </div>
       </div>
@@ -158,12 +159,18 @@ export default {
               left 0
               bottom 0
               width 0
+              opacity 0
               height 1px
               bg-color(#fff)
               transition all ease .5s
           .input-active
             &:after
               width 100%
-        &:deep() .van-number-keyboard
+              opacity 1
+      .captcha-keyboard
+        &:deep() .van-number-keyboard__body
           bg-color(#313131)
+          .van-key
+            bg-color(#6e6e6e)
+            color #ececec
 </style>
