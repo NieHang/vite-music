@@ -3,36 +3,47 @@
     v-model:show="showInputCtCodeSection"
     position="right"
     :style="{ width: '100%', height: '100%' }"
+    @open="startCountTime"
+    @close="clearCountTime"
   >
-    <div class="login-section-ctcode">
+    <div class="login-section-captcha">
       <AppBar
         title="手机号登录"
         leftIconType="cross"
         @leftIconClick="emit('update:show')"
       />
-      <div class="login-section-ctcode-content">
+      <div class="login-section-captcha-content">
         <div class="title">
           <div>请输入验证码</div>
           <div class="subtitle">
             <div class="subtitle-left">
-              <span>已发送至+852 1</span>
+              <span>已发送至+{{ ctcode }} {{ phone }}</span>
               <svg-icon name="number-pen" />
             </div>
-            <div class="subtitle-right">49s</div>
+            <div class="subtitle-right">
+              <span v-show="restOfTimeForGetCaptcha"
+                >{{ restOfTimeForGetCaptcha }}s</span
+              >
+              <span
+                v-show="!restOfTimeForGetCaptcha"
+                @click="getCaptchaAgain(phone, ctcode)"
+                >重新发送</span
+              >
+            </div>
           </div>
         </div>
-        <div class="ctcode">
+        <div class="captcha">
           <van-password-input
-            :value="ctcode"
+            :value="captcha"
             :mask="false"
             :gutter="10"
             :focused="showKeyboard"
             @focus="showKeyboard = true"
-            class="ctcode-input"
+            class="captcha-input"
           />
           <!-- 数字键盘 -->
           <van-number-keyboard
-            v-model="ctcode"
+            v-model="captcha"
             :show="showKeyboard"
             :maxlength="6"
             @blur="showKeyboard = false"
@@ -46,13 +57,21 @@
 <script>
 import AppBar from '@/components/shared/AppBar.vue'
 import { PasswordInput, NumberKeyboard } from 'vant'
-import { ref } from '@vue/reactivity'
-import { nextTick, watch } from '@vue/runtime-core'
+import { toRefs } from '@vue/reactivity'
+import useLoginInputCaptcha from '@/hooks/login/useLoginInputCaptcha'
 
 export default {
-  name: 'LoginInputCtCode',
+  name: 'LoginInputCaptcha',
   props: {
     showInputCtCodeSection: Boolean,
+    ctcode: {
+      type: String,
+      default: '86',
+    },
+    phone: {
+      type: String,
+      required: true,
+    },
   },
   components: {
     [PasswordInput.name]: PasswordInput,
@@ -60,29 +79,26 @@ export default {
     AppBar,
   },
   setup(props, { emit }) {
-    const ctcode = ref('')
-    const showKeyboard = ref(true)
-    watch(ctcode, async (val) => {
-      await nextTick()
+    const { state, startCountTime, getCaptchaAgain, clearCountTime } =
+      useLoginInputCaptcha()
 
-      const nodes = document.getElementsByClassName('van-password-input__item')
-      nodes[val.length - 1 < 0 ? 0 : val.length - 1].classList.add(
-        'input-active'
-      )
-      if (val === '') nodes[0].classList.remove('input-active')
-    })
-
-    return { emit, ctcode, showKeyboard }
+    return {
+      emit,
+      ...toRefs(state),
+      startCountTime,
+      getCaptchaAgain,
+      clearCountTime,
+    }
   },
 }
 </script>
 
 <style lang="stylus" scoped>
-.login-section-ctcode
+.login-section-captcha
   padding 0 16px
   height 100%
   bg-color(var(--body-bgcolor))
-  .login-section-ctcode-content
+  .login-section-captcha-content
     & > .title
       mixin-font(var(--common-font-color), $font-size-md, $font-weight-sm)
       .subtitle
@@ -98,6 +114,8 @@ export default {
             stroke #4f4f4f
         &-right
           mixin-font(#7b7b7b, $font-size-xs, $font-weight-sm)
+          span:nth-child(2)
+            mixin-font(#436bf2, $font-size-xs, $font-weight-sm)
     & > .phone-number
       mixin-font(var(--common-font-color))
       margin-top 20px
@@ -124,9 +142,9 @@ export default {
         float right
         color var(--cell-group-title-color)
         transform translateY(20%)
-    & > .ctcode
+    & > .captcha
       margin-top 20px
-      .ctcode-input
+      .captcha-input
         &:deep() .van-password-input__security
           li
             bg-color(unset)

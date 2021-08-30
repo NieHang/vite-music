@@ -12,9 +12,13 @@ const loginApis: {
     method: 'post',
     url: `${base.api}login/cellphone`,
   },
-  loginByCtCode: {
+  loginByCaptcha: {
     method: 'post',
     url: `${base.api}captcha/sent`,
+  },
+  verifyCaptcha: {
+    method: 'post',
+    url: `${base.api}captcha/verify`,
   },
 }
 

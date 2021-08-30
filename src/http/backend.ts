@@ -1,11 +1,11 @@
 import { HandledApiType } from '@/types/backend'
-import { AxiosPromise, AxiosResponse } from 'axios'
+import { AxiosPromise } from 'axios'
 import { Api } from './api'
 import service from './http'
 
 const axiosApi = {
   // 对网络请求封装
-  get(url: string): () => AxiosPromise<AxiosResponse> {
+  get(url: string): () => AxiosPromise<any> {
     return (params = {}) =>
       service({
         method: 'GET',
@@ -14,12 +14,12 @@ const axiosApi = {
       })
   },
 
-  post(url: string): (params?: any) => AxiosPromise<AxiosResponse> {
+  post(url: string): (params?: any) => AxiosPromise<any> {
     return (params = {}) =>
       service({
         method: 'POST',
         url,
-        ...params,
+        params,
       })
   },
 

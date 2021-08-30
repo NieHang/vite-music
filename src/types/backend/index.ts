@@ -1,21 +1,25 @@
-import { AxiosPromise, AxiosResponse } from 'axios'
+import { AxiosPromise } from 'axios'
 
 export interface ApiType {
   [apiModule: string]: any
 }
 
 export interface HandledLoginApiType {
-  getCountryNumberPerfix: () => AxiosPromise<AxiosResponse>
+  getCountryNumberPerfix: () => AxiosPromise<any>
   loginByPhoneNumber: (params: {
     phone: string
     password: string
     countrycode?: string
     md5_password?: string
-  }) => AxiosPromise<AxiosResponse>
-  loginByCtCode: (params: {
+  }) => AxiosPromise<any>
+  loginByCaptcha: (params: {
     phone: string
     ctcode?: string
-  }) => AxiosPromise<AxiosResponse>
+  }) => AxiosPromise<any>
+  verifyCaptcha: (param: {
+    captcha: string
+    ctcode?: string
+  }) => AxiosPromise<any>
 }
 
 export interface HandledApiType extends ApiType {
