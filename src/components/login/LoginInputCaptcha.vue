@@ -38,6 +38,7 @@
             :mask="false"
             :gutter="10"
             :focused="showKeyboard"
+            :length="4"
             @focus="showKeyboard = true"
             class="captcha-input"
           />
@@ -45,7 +46,7 @@
           <van-number-keyboard
             v-model="captcha"
             :show="showKeyboard"
-            :maxlength="6"
+            :maxlength="4"
             @blur="showKeyboard = false"
           />
         </div>
@@ -147,9 +148,22 @@ export default {
       .captcha-input
         &:deep() .van-password-input__security
           li
+            position relative
             bg-color(unset)
             border-bottom 1px solid #282828
             color #fff
+            &:after
+              content: ''
+              position absolute
+              left 0
+              bottom 0
+              width 0
+              height 1px
+              bg-color(#fff)
+              transition all ease .5s
           .input-active
-            border-bottom 1px solid #fff
+            &:after
+              width 100%
+        &:deep() .van-number-keyboard
+          bg-color(#313131)
 </style>
