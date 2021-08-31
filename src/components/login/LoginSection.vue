@@ -47,9 +47,11 @@ export default {
   setup(props) {
     const store = useStore()
 
-    const showLoginSection: ComputedRef<Boolean> = computed(
-      () => store.state.global.showLoginSection
-    )
+    // 通过传入对象的方式，来告知 computed 是一个可变数据，而不是只可读
+    const showLoginSection = computed({
+      get: () => store.state.global.showLoginSection,
+      set: () => {},
+    })
 
     const showLoginByPhoneSection: Ref<Boolean> = ref(false)
 
@@ -81,6 +83,7 @@ export default {
     left 16px
     font-size 25px
     color $w
+    z-index 1
   .wrapper-logo
     position relative
     height 70%
