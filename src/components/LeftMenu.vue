@@ -49,10 +49,6 @@
       </van-cell-group>
     </aside>
   </van-popup>
-  <component
-    :is="LoginSectionAsyncComponent"
-    v-model:show="showLoginSection"
-  ></component>
 </template>
 
 <script lang="ts">
@@ -61,7 +57,6 @@ import VanCell from '@/components/shared/VanCell.vue'
 import { toRefs } from '@vue/reactivity'
 import useTheme from '@/hooks/themes/useThemes'
 import useLeftMenu from '@/hooks/leftMenu/useLeftMenu'
-import { defineAsyncComponent } from '@vue/runtime-core'
 
 export default {
   name: 'LeftMenu',
@@ -78,15 +73,10 @@ export default {
 
     const { leftMenuState, openLoginSection } = useLeftMenu()
 
-    const LoginSectionAsyncComponent = defineAsyncComponent(
-      () => import('@/components/login/LoginSection.vue')
-    )
-
     return {
       ...toRefs(leftMenuState),
       changeTheme,
       openLoginSection,
-      LoginSectionAsyncComponent,
     }
   },
 }

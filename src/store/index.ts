@@ -1,16 +1,11 @@
 import { createStore } from 'vuex'
-import { MUTATION } from '@/types'
+import { global } from './modules/global'
+import { user } from './modules/user'
 
 const store = createStore({
-  state() {
-    return {
-      showLeftMenu: false,
-    }
-  },
-  mutations: {
-    [MUTATION.SHOW_LEFT_MENU](state: any, showLeftMenu) {
-      state.showLeftMenu = showLeftMenu
-    },
+  modules: {
+    global,
+    user,
   },
 })
 

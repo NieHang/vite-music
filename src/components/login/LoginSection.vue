@@ -1,13 +1,16 @@
 <template>
   <van-popup
     v-model:show="showLoginSection"
-    closeable
-    close-icon-position="top-left"
     position="bottom"
     :style="{ height: '100%' }"
     class="login-section"
   >
     <div class="login-section-wrapper">
+      <van-icon
+        class="wrapper-close-btn"
+        name="cross"
+        @click="toHideLoginSection"
+      />
       <div class="wrapper-logo">
         <svg-icon name="wangyiyun" />
         <div class="circle"></div>
@@ -31,25 +34,36 @@
 
 <script lang="ts">
 import { Ref, ref } from 'vue'
-import { defineAsyncComponent } from '@vue/runtime-core'
+import { Icon } from 'vant'
+import { computed, ComputedRef, defineAsyncComponent } from '@vue/runtime-core'
+import { useStore } from 'vuex'
+import { MUTATION } from '@/types'
 
 export default {
   name: 'LoginSection',
-  props: {
-    showLoginSection: {
-      type: Boolean,
-      default: false,
-    },
+  components: {
+    [Icon.name]: Icon,
   },
   setup(props) {
+    const store = useStore()
+
+    const showLoginSection: ComputedRef<Boolean> = computed(
+      () => store.state.global.showLoginSection
+    )
+
     const showLoginByPhoneSection: Ref<Boolean> = ref(false)
+
+    const toHideLoginSection = () =>
+      store.commit(MUTATION.SHOW_LOGIN_SECTION, false)
 
     const LoginByPhoneComponent = defineAsyncComponent(
       () => import('@/components/login/LoginByPhone.vue')
     )
     return {
       props,
+      showLoginSection,
       showLoginByPhoneSection,
+      toHideLoginSection,
       LoginByPhoneComponent,
     }
   },
@@ -58,8 +72,15 @@ export default {
 
 <style lang="stylus" scoped>
 .login-section-wrapper
+  position relative
   height 100%
   bg-color(var(--logo-bgcolor))
+  .wrapper-close-btn
+    position absolute
+    top 16px
+    left 16px
+    font-size 25px
+    color $w
   .wrapper-logo
     position relative
     height 70%
