@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
+// import storage from 'good-storage'
 
 const service = axios.create({
   baseURL: process.env.NODE_ENV === 'production' ? `/` : window.location.origin,
@@ -29,6 +30,12 @@ const service = axios.create({
     },
   ],
 })
+
+// if (storage.get('token')) {
+//   service.defaults.headers.common['Authorization'] = `Bearer ${storage.get(
+//     'token'
+//   )}`
+// }
 
 service.interceptors.request.use(
   (config: AxiosRequestConfig) => config,
