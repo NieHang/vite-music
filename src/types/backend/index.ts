@@ -27,8 +27,20 @@ export interface HandledLoginApiType {
     phone: string
     ctcode?: string
   }) => AxiosPromise<any>
+  registerOrChangePassword: (params: {
+    captcha: string
+    phone: string
+    password: string
+    nickname: string
+    ctcode?: string
+  }) => AxiosPromise<any>
+}
+
+export interface HandledUserApiType {
+  getUserAccountInfo: () => AxiosPromise<any>
 }
 
 export interface HandledApiType extends ApiType {
   loginApis: HandledLoginApiType
+  userApis: HandledUserApiType
 }
