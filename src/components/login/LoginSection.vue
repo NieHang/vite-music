@@ -7,6 +7,7 @@
   >
     <div class="login-section-wrapper">
       <van-icon
+        v-show="loginStatus"
         class="wrapper-close-btn"
         name="cross"
         @click="toHideLoginSection"
@@ -15,14 +16,18 @@
         <svg-icon name="wangyiyun" />
         <div class="circle"></div>
       </div>
-      <div class="wrapper-login">
-        <div class="wrapper-login-number">
+      <div :class="['wrapper-login', { show: !showLoginBtn }]">
+        <div v-show="loginStatus" class="wrapper-login-number">
           <span>17863080270</span>
           <svg-icon name="number-pen" @click="showLoginByPhoneSection = true" />
         </div>
         <div class="wrapper-login-btn" @click="showLoginByPhoneSection = true">
-          注册/登录
+          手机号登录
         </div>
+      </div>
+      <div :class="['wrapper-footer', { show: showLoginBtn }]">
+        <span>网易云音乐 · 音乐的力量</span>
+        <span>by jonathan</span>
       </div>
     </div>
     <component
@@ -33,11 +38,9 @@
 </template>
 
 <script lang="ts">
-import { Ref, ref } from 'vue'
 import { Icon } from 'vant'
-import { computed, ComputedRef, defineAsyncComponent } from '@vue/runtime-core'
-import { useStore } from 'vuex'
-import { MUTATION } from '@/types'
+import { toRefs } from '@vue/runtime-core'
+import useLoginSection from '@/hooks/login/useLoginSection'
 
 export default {
   name: 'LoginSection',
@@ -45,26 +48,12 @@ export default {
     [Icon.name]: Icon,
   },
   setup(props) {
-    const store = useStore()
+    const { state, toHideLoginSection, LoginByPhoneComponent } =
+      useLoginSection()
 
-    // 通过传入对象的方式，来告知 computed 是一个可变数据，而不是只可读
-    const showLoginSection = computed({
-      get: () => store.state.global.showLoginSection,
-      set: () => {},
-    })
-
-    const showLoginByPhoneSection: Ref<Boolean> = ref(false)
-
-    const toHideLoginSection = () =>
-      store.commit(MUTATION.SHOW_LOGIN_SECTION, false)
-
-    const LoginByPhoneComponent = defineAsyncComponent(
-      () => import('@/components/login/LoginByPhone.vue')
-    )
     return {
       props,
-      showLoginSection,
-      showLoginByPhoneSection,
+      ...toRefs(state),
       toHideLoginSection,
       LoginByPhoneComponent,
     }
@@ -77,6 +66,7 @@ export default {
   position relative
   height 100%
   bg-color(var(--logo-bgcolor))
+
   .wrapper-close-btn
     position absolute
     top 16px
@@ -84,6 +74,7 @@ export default {
     font-size 25px
     color $w
     z-index 1
+
   .wrapper-logo
     position relative
     height 70%
@@ -104,9 +95,14 @@ export default {
         bd-radius(50%)
         border: 1px solid #f12a24
         animation after 5s linear infinite
+
   .wrapper-login
+    position relative
     padding 0 20px
     text-align center
+    opacity 0
+    z-index 0
+    transition opacity .5s ease
     &-number
       height 35px
       line-height 35px
@@ -128,6 +124,35 @@ export default {
       font-style normal
       &:active
         opacity .5
+
+  .wrapper-footer
+    display flex
+    flex-direction column
+    align-items center
+    margin-top 20px
+    opacity 0
+    transition opacity .5s ease
+    span:nth-child(1)
+      display inline-block
+      mixin-font($w, $font-size-lg)
+      margin-bottom 10px
+      font-family 'Alibaba PuHuiTi'
+      font-style normal
+    span:nth-child(2)
+      display flex
+      align-items center
+      justify-content space-around
+      mixin-font($w, $font-size-sm)
+      &:after, &:before
+        content ''
+        width 45px
+        height 1px
+        bg-color(#e24b3f)
+
+  .show
+    opacity 1
+    z-index 1
+
 
 @keyframes circle
   from
