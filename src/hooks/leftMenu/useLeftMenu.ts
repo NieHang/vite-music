@@ -14,7 +14,8 @@ export default function useLeftMenus() {
     Themes,
   })
 
-  const openLoginSection = () => store.commit(MUTATION.SHOW_LOGIN_SECTION, true)
+  const openLoginSection = () =>
+    store.commit(MUTATION.GLOBAL_SHOW_LOGIN_SECTION, true)
 
   return {
     leftMenuState,

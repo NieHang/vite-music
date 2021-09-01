@@ -1,14 +1,11 @@
 import { reactive } from 'vue'
-import {
-  LoginInputNumberStateType,
-  PHONE_NUMBER_PERFIX,
-} from '@/types/components'
+import { LoginByPhoneStateType, PHONE_NUMBER_PERFIX } from '@/types/components'
 import { apis } from '@/http/backend'
 import storage from 'good-storage'
 import { Toast } from 'vant'
 
 export default function useLoginInputNumber() {
-  const state: LoginInputNumberStateType = reactive({
+  const state: LoginByPhoneStateType = reactive({
     phoneNumber: null,
     showIndexCountryCodeList: false,
     ctcode: '86',
@@ -20,7 +17,7 @@ export default function useLoginInputNumber() {
   const getCountryCodeAndIndexListData = async () => {
     const data = storage.get(PHONE_NUMBER_PERFIX)
     if (!data) {
-      await apis.loginApis.getCountryNumberPerfix().then((response) => {
+      await apis.loginApis.getCountryCode().then((response) => {
         storage.set(PHONE_NUMBER_PERFIX, response.data)
       })
     }

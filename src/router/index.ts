@@ -1,9 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 
-export const constantRoutes: Array<any> = [
+export const constantRoutes = [
   {
     path: '/',
+    name: 'Home',
     component: Home,
   },
 ]

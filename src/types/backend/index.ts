@@ -5,12 +5,14 @@ export interface ApiType {
 }
 
 export interface HandledLoginApiType {
-  getCountryNumberPerfix: () => AxiosPromise<any>
-  loginByPhoneNumber: (params: {
+  getCountryCode: () => AxiosPromise<any>
+  getLoginStatus: () => AxiosPromise<any>
+  loginByPhone: (params: {
     phone: string
-    password: string
+    password?: string
     countrycode?: string
     md5_password?: string
+    captcha?: string
   }) => AxiosPromise<any>
   loginByCaptcha: (params: {
     phone: string

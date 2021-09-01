@@ -4,11 +4,15 @@ import base from './base'
 const loginApis: {
   [api: string]: AxiosRequestConfig
 } = {
-  getCountryNumberPerfix: {
+  getCountryCode: {
     method: 'get',
-    url: `${base.local}static/phone-number/number.json`,
+    url: `${base.local}static/countries-code/countries-code.json`,
   },
-  loginByPhoneNumber: {
+  getLoginStatus: {
+    method: 'get',
+    url: `${base.api}login/status`,
+  },
+  loginByPhone: {
     method: 'post',
     url: `${base.api}login/cellphone`,
   },
@@ -23,6 +27,10 @@ const loginApis: {
   checkPhoneRegister: {
     method: 'post',
     url: `${base.api}cellphone/existence/check`,
+  },
+  registerOrChangePassword: {
+    method: 'post',
+    url: `${base.api}register/cellphone`,
   },
 }
 

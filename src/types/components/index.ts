@@ -1,3 +1,5 @@
+import { ComputedRef } from 'vue'
+
 export const PHONE_NUMBER_PERFIX: string = 'PHONE_NUMBER_PERFIX'
 
 export interface LeftMenuStateType {
@@ -6,7 +8,14 @@ export interface LeftMenuStateType {
   themeChecked: Boolean
   showLeftMenu: Boolean
 }
-export interface LoginInputNumberStateType {
+
+export interface LoginSectionStateType {
+  showLoginBtn: Boolean
+  loginStatus: Boolean
+  showLoginSection: ComputedRef<Boolean>
+  showLoginByPhoneSection: Boolean
+}
+export interface LoginByPhoneStateType {
   phoneNumber: null | number
   showIndexCountryCodeList: Boolean
   showInputCtCodeSection: Boolean
