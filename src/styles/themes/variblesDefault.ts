@@ -29,6 +29,9 @@ const varibles: Varibles = {
   ['--switch-bgcolor']: '#373737',
 
   ['--button-bgcolor']: '#E95F4D',
+
+  ['--dialog-bgcolor']: '#272726',
+  ['--dialog-btn-color']: '#407fd8',
 }
 
 export default varibles
