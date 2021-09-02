@@ -16,7 +16,7 @@
         <svg-icon name="wangyiyun" />
         <div class="circle"></div>
       </div>
-      <div :class="['wrapper-login', { show: !showLoginBtn }]">
+      <div :class="['wrapper-login', { show: showLoginBtn }]">
         <div v-show="loginStatus" class="wrapper-login-number">
           <span>17863080270</span>
           <svg-icon name="number-pen" @click="showLoginByPhoneSection = true" />
@@ -25,7 +25,7 @@
           手机号登录
         </div>
       </div>
-      <div :class="['wrapper-footer', { show: showLoginBtn }]">
+      <div :class="['wrapper-footer', { show: !showLoginBtn }]">
         <span>网易云音乐 · 音乐的力量</span>
         <span>by jonathan</span>
       </div>

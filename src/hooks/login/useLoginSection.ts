@@ -7,7 +7,10 @@ export default function useLoginSection() {
   const store = useStore()
 
   const state: LoginSectionStateType = reactive({
-    showLoginBtn: true,
+    showLoginBtn: computed({
+      get: () => store.state.global.showLoginBtn,
+      set: () => {},
+    }),
     loginStatus: computed({
       get: () => store.state.user.loginStatus,
       set: () => {},
@@ -26,11 +29,8 @@ export default function useLoginSection() {
     () => import('@/components/login/LoginByPhone.vue')
   )
 
-  const getLoginStatus = async () => {
-    store.dispatch(ACTION.USER_GET_LOGIN_STATUS).then((res) => {
-      state.showLoginBtn = res
-    })
-  }
+  const getLoginStatus = async () =>
+    store.dispatch(ACTION.USER_GET_LOGIN_STATUS)
 
   getLoginStatus()
 

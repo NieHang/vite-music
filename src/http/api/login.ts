@@ -10,7 +10,11 @@ const loginApis: {
   },
   getLoginStatus: {
     method: 'get',
-    url: `${base.api}login/status`,
+    url: `${base.api}login/status?timestamp=${new Date().getTime()}`,
+  },
+  loginOut: {
+    method: 'post',
+    url: `${base.api}logout`,
   },
   loginByPhone: {
     method: 'post',

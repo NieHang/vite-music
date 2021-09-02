@@ -3,21 +3,22 @@ import { ActionTree, Module, MutationTree } from 'vuex'
 import { UserState, RootState } from '@/types/store'
 import { apis } from '@/http/backend'
 
-const state = () => ({
+const state = (): UserState => ({
   user: null,
   loginStatus: false,
 })
 
 const actions: ActionTree<UserState, RootState> = {
-  [ACTION.USER_GET_LOGIN_STATUS]: async ({ commit }) => {
-    return new Promise(async (resolve) => {
+  [ACTION.USER_GET_LOGIN_STATUS]: async ({ state, commit }) => {
+    return new Promise(async () => {
       const res = await apis.loginApis.getLoginStatus()
       if (res.data.data.profile !== null) {
         commit(MUTATION.USER_CHANGE_LOGIN_STATUS, true)
         commit(MUTATION.USER_GET_USER_ACCOUNT_INFO, res.data.data.profile)
         commit(MUTATION.GLOBAL_SHOW_LOGIN_SECTION, false)
+      } else if (!state.loginStatus) {
+        commit(MUTATION.GLOBAL_SHOW_LOGIN_BTN, true)
       }
-      resolve(Boolean(res.data.data.profile))
     })
   },
 }

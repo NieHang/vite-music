@@ -7,6 +7,7 @@ export interface ApiType {
 export interface HandledLoginApiType {
   getCountryCode: () => AxiosPromise<any>
   getLoginStatus: () => AxiosPromise<any>
+  loginOut: () => AxiosPromise<any>
   loginByPhone: (params: {
     phone: string
     password?: string

@@ -1,6 +1,7 @@
 export interface GlobalState {
   showLoginSection: Boolean
   showLeftMenu: Boolean
+  showLoginBtn: Boolean
   token: string
 }
 
@@ -35,6 +36,7 @@ export interface RootState {
 export const MUTATION = {
   GLOBAL_SHOW_LOGIN_SECTION: 'GLOBAL_SHOW_LOGIN_SECTION',
   GLOBAL_SHOW_LEFT_MENU: 'GLOBAL_SHOW_LEFT_MENU',
+  GLOBAL_SHOW_LOGIN_BTN: 'GLOBAL_SHOW_LOGIN_BTN',
   GLOBAL_LOGIN_TOKEN: 'GLOBAL_LOGIN_TOKEN',
   GLOBAL_LOGIN_OUT: 'GLOBAL_LOGIN_OUT',
   USER_GET_LOGIN_STATUS: 'USER_GET_LOGIN_STATUS',

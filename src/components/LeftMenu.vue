@@ -47,16 +47,26 @@
           </template>
         </VanCell>
       </van-cell-group>
+
+      <van-button
+        type="primary"
+        block
+        class="left-menu-aside-quit"
+        @click="loginOut"
+        >退出登录</van-button
+      >
     </aside>
   </van-popup>
 </template>
 
 <script lang="ts">
-import { Icon, Image, CellGroup, Badge, Switch } from 'vant'
+import { Icon, Image, CellGroup, Badge, Switch, Button, Dialog } from 'vant'
 import VanCell from '@/components/shared/VanCell.vue'
 import { toRefs } from '@vue/reactivity'
 import useTheme from '@/hooks/themes/useThemes'
 import useLeftMenu from '@/hooks/leftMenu/useLeftMenu'
+import { useStore } from 'vuex'
+import { ACTION } from '@/types'
 
 export default {
   name: 'LeftMenu',
@@ -66,17 +76,33 @@ export default {
     [Icon.name]: Icon,
     [Badge.name]: Badge,
     [Switch.name]: Switch,
+    [Button.name]: Button,
+    [Dialog.name]: Dialog,
     VanCell,
   },
   setup() {
+    const store = useStore()
+
     const changeTheme = useTheme()
 
     const { leftMenuState, openLoginSection } = useLeftMenu()
+
+    const loginOut = () => {
+      Dialog.confirm({
+        title: '网易云音乐',
+        message: '确定退出当前帐号吗？',
+      })
+        .then(() => {
+          store.dispatch(ACTION.GLOBAL_LOGIN_OUT)
+        })
+        .catch(() => {})
+    }
 
     return {
       ...toRefs(leftMenuState),
       changeTheme,
       openLoginSection,
+      loginOut,
     }
   },
 }
@@ -110,6 +136,13 @@ export default {
       bd-radius(var(--cell-group-border-radius))
       &:after
         border none
+    &-quit
+      margin-top 10px
+      missing-corner(var(--linear-gradient-double-missing-corner), var(--linear-gradient-double-missing-corner-background-size))
+      bd-radius(var(--cell-group-border-radius))
+      border none
+      color var(--common-font-color)
+
 
 .show
   left 0
