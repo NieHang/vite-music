@@ -1,12 +1,16 @@
+import { Themes } from '@/types'
 import { ComputedRef } from 'vue'
 
 export const PHONE_NUMBER_PERFIX: string = 'PHONE_NUMBER_PERFIX'
 
 export interface LeftMenuStateType {
+  nickname: ComputedRef<string>
+  avatarUrl: ComputedRef<string>
+  loginStatus: ComputedRef<Boolean>
   leftMenuAsideRef: null | HTMLElement
-  showLoginSection: Boolean
   themeChecked: Boolean
   showLeftMenu: Boolean
+  Themes: typeof Themes
 }
 
 export interface LoginSectionStateType {

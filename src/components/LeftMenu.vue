@@ -12,9 +12,9 @@
           lazy-load
           width="30px"
           height="30px"
-          src="https://img01.yzcdn.cn/vant/cat.jpeg"
+          :src="avatarUrl"
         />
-        <span @click="openLoginSection">肥橘 ></span>
+        <span @click="loginStatus && openLoginSection">{{ nickname }} ></span>
       </div>
 
       <van-cell-group class="left-menu-aside-group">
@@ -60,13 +60,11 @@
 </template>
 
 <script lang="ts">
-import { Icon, Image, CellGroup, Badge, Switch, Button, Dialog } from 'vant'
+import { Icon, Image, CellGroup, Badge, Switch, Button } from 'vant'
 import VanCell from '@/components/shared/VanCell.vue'
 import { toRefs } from '@vue/reactivity'
 import useTheme from '@/hooks/themes/useThemes'
 import useLeftMenu from '@/hooks/leftMenu/useLeftMenu'
-import { useStore } from 'vuex'
-import { ACTION } from '@/types'
 
 export default {
   name: 'LeftMenu',
@@ -77,26 +75,12 @@ export default {
     [Badge.name]: Badge,
     [Switch.name]: Switch,
     [Button.name]: Button,
-    [Dialog.name]: Dialog,
     VanCell,
   },
   setup() {
-    const store = useStore()
-
     const changeTheme = useTheme()
 
-    const { leftMenuState, openLoginSection } = useLeftMenu()
-
-    const loginOut = () => {
-      Dialog.confirm({
-        title: '网易云音乐',
-        message: '确定退出当前帐号吗？',
-      })
-        .then(() => {
-          store.dispatch(ACTION.GLOBAL_LOGIN_OUT)
-        })
-        .catch(() => {})
-    }
+    const { leftMenuState, openLoginSection, loginOut } = useLeftMenu()
 
     return {
       ...toRefs(leftMenuState),
