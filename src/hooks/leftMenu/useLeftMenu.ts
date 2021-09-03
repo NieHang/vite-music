@@ -13,12 +13,18 @@ export default function useLeftMenus() {
     loginStatus: computed(() => store.state.user.loginStatus),
     leftMenuAsideRef: null,
     themeChecked: Boolean(storage.get(THEME_KEY)),
-    showLeftMenu: false,
+    showLeftMenu: computed({
+      get: () => store.state.global.showLeftMenu,
+      set: () => {},
+    }),
     Themes,
   })
 
   const openLoginSection = () =>
     store.commit(MUTATION.GLOBAL_SHOW_LOGIN_SECTION, true)
+
+  const toHideLeftMenu = () =>
+    store.dispatch(ACTION.GLOBAL_SHOW_LEFT_MENU, false)
 
   const loginOut = () => {
     Dialog.confirm({
@@ -35,5 +41,6 @@ export default function useLeftMenus() {
     leftMenuState,
     openLoginSection,
     loginOut,
+    toHideLeftMenu,
   }
 }

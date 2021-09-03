@@ -12,8 +12,8 @@ const state = (): GlobalState => ({
 })
 
 const actions: ActionTree<GlobalState, RootState> = {
-  [ACTION.GLOBAL_SHOW_LEFT_MENU]: ({ commit }) => {
-    commit(MUTATION.GLOBAL_SHOW_LEFT_MENU, true)
+  [ACTION.GLOBAL_SHOW_LEFT_MENU]: ({ commit }, result) => {
+    commit(MUTATION.GLOBAL_SHOW_LEFT_MENU, result)
   },
   [ACTION.GLOBAL_LOGIN_OUT]: async ({ commit }) => {
     await apis.loginApis.loginOut()

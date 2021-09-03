@@ -4,6 +4,7 @@
     v-model:show="showLeftMenu"
     position="left"
     :style="{ width: '80%', height: '100%' }"
+    @click-overlay="toHideLeftMenu"
   >
     <aside ref="leftMenuAsideRef" class="left-menu-aside">
       <div class="left-menu-aside-info">
@@ -80,13 +81,15 @@ export default {
   setup() {
     const changeTheme = useTheme()
 
-    const { leftMenuState, openLoginSection, loginOut } = useLeftMenu()
+    const { leftMenuState, openLoginSection, loginOut, toHideLeftMenu } =
+      useLeftMenu()
 
     return {
       ...toRefs(leftMenuState),
       changeTheme,
       openLoginSection,
       loginOut,
+      toHideLeftMenu,
     }
   },
 }
