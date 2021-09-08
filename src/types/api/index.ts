@@ -41,7 +41,12 @@ export interface HandledUserApiType {
   getUserAccountInfo: () => AxiosPromise<any>
 }
 
+export interface HandledHomeApiType {
+  getBanners: (params: { type: number }) => AxiosPromise<any>
+}
+
 export interface HandledApiType extends ApiType {
   loginApis: HandledLoginApiType
   userApis: HandledUserApiType
+  homeApis: HandledHomeApiType
 }

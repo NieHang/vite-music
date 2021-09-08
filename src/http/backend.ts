@@ -1,4 +1,4 @@
-import { HandledApiType } from '@/types/backend'
+import { HandledApiType } from '@/types/api'
 import { AxiosPromise } from 'axios'
 import { Api } from './api'
 import service from './http'

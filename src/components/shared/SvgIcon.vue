@@ -1,5 +1,5 @@
 <template>
-  <svg class="svg-icon" v-bind="$attrs">
+  <svg class="svg-icon" v-bind="$attrs" :style="{ stroke: stroke, fill: fill }">
     <use :xlink:href="iconName" />
   </svg>
 </template>
@@ -13,6 +13,8 @@ export default {
       type: String as PropType<String>,
       required: true,
     },
+    stroke: String,
+    fill: String,
   },
   setup(props) {
     const iconName = computed(() => `#icon-${props.name}`)
@@ -27,6 +29,5 @@ export default {
 .svg-icon
   width 1em
   height 1em
-  fill currentColor
   vertical-align middle
 </style>
