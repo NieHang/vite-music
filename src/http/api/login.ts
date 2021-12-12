@@ -6,7 +6,7 @@ const loginApis: {
 } = {
   getCountryCode: {
     method: 'get',
-    url: `${base.local}static/countries-code/countries-code.json`,
+    url: `${base.local}static/countries/countries-code.json`,
   },
   getLoginStatus: {
     method: 'get',

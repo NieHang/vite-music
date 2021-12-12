@@ -27,7 +27,7 @@ import WapNav from '@/components/shared/Wap.vue'
 import { defineComponent, toRefs } from 'vue'
 import SvgIcon from '@/components/shared/SvgIcon.vue'
 import SearchInput from '@/components/shared/SearchInput.vue'
-import useHome from '@/hooks/home/useHome'
+import useBanner from '@/hooks/home/useBanner'
 
 export default defineComponent({
   name: 'Home',
@@ -42,9 +42,9 @@ export default defineComponent({
     SvgIcon,
   },
   setup() {
-    const { homeState } = useHome()
+    const banners = useBanner('Iphone')
     return {
-      ...toRefs(homeState),
+      banners,
     }
   },
 })

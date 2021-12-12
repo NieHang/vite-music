@@ -4,7 +4,7 @@ import { ref } from '@vue/runtime-dom'
 export default function useBanner(
   bannerType: 'Pc' | 'Android' | 'Iphone' | 'Ipad'
 ) {
-  let banners = ref(null)
+  let banners = ref()
 
   enum BannerType {
     Pc = 0,
